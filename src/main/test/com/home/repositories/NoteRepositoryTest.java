@@ -22,9 +22,6 @@ public class NoteRepositoryTest {
     @Autowired
     private NoteRepository noteRepository;
 
-    @Autowired
-    private TestEntityManager entityManager;
-
     @Test
     public void whenSave() {
         Note note = getTestNote();
