@@ -30,7 +30,7 @@ public class NoteRepositoryTest {
 
         assertEquals(note.getAmount(), savedNote.getAmount());
         assertEquals(note.getDescription(), savedNote.getDescription());
-        assertEquals(note.getnDate(), savedNote.getnDate());
+        assertEquals(note.getNoteDate(), savedNote.getNoteDate());
     }
 
     @Test
@@ -60,7 +60,7 @@ public class NoteRepositoryTest {
         Note note = new Note();
         note.setAmount(new BigDecimal(200));
         note.setDescription("this is test note");
-        note.setnDate(LocalDate.of(2000, 10, 20));
+        note.setNoteDate(LocalDate.of(2000, 10, 20));
 
         return note;
     }
