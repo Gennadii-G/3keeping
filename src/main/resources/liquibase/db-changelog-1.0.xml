@@ -1,0 +1,21 @@
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet id="create_tables" author="gennadii_borodin">
+
+        <createSequence sequenceName="seq_channel_id" startValue="1" incrementBy="1"/>
+
+        <createTable tableName="note">
+            <column name="id" type="numeric(19, 0)" defaultValueSequenceNext="seq_channel_id">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="amount" type="decimal(19, 2)"/>
+            <column name="description" type="text"/>
+            <column name="note_date" type="timestamp"/>
+        </createTable>
+
+    </changeSet>
+
+</databaseChangeLog>

@@ -2,6 +2,9 @@ spring:
   profiles.active: dev
   logging.level.ROOT: ERROR
 
+  liquibase.change-log: classpath:liquibase/db.changelog-master.xml
+  jpa:
+    properties.hibernate.jdbc.lob.non_contextual_creation: true
 ---
 spring:
   profiles: dev
@@ -15,7 +18,7 @@ spring:
 
   jpa:
     show-sql: true
-    hibernate.ddl-auto: update
+#    hibernate.ddl-auto: update
 
 ---
 spring:
