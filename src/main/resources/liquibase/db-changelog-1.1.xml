@@ -1,0 +1,29 @@
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet id="create_tables" author="gennadii_borodin">
+
+        <createTable tableName="category">
+            <column name="id" type="numeric(19, 0)" defaultValueSequenceNext="seq_channel_id">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="priority" type="decimal(5, 2)"/>
+            <column name="name" type="varchar(255)"/>
+            <column name="code" type="varchar(255)"/>
+        </createTable>
+
+
+        <createTable tableName="owner">
+            <column name="id" type="numeric(19, 0)" defaultValueSequenceNext="seq_channel_id">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="averagePriority" type="decimal(5, 2)"/>
+            <column name="lastMonthAveragePriority" type="decimal(5, 2)"/>
+            <column name="name" type="varchar(255)"/>
+        </createTable>
+
+    </changeSet>
+
+</databaseChangeLog>
