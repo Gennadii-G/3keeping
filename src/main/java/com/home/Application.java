@@ -4,8 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.integration.config.EnableIntegration;
 
 @SpringBootApplication
+//@EnableIntegration
 //@PropertySource(value = "file:application.properties2")
 public class Application  extends SpringBootServletInitializer {
 
