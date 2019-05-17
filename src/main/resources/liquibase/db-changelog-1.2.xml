@@ -3,7 +3,16 @@
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
 
-    <include file="liquibase/db-changelog-1.0.xml"/>
-    <include file="liquibase/db-changelog-1.1.xml"/>
-    <include file="liquibase/db-changelog-1.2.xml"/>
+    <changeSet id="add_columns_into_note" author="gennadii_borodin">
+
+        <addColumn tableName="note">
+            <column name="category_id" type="numeric(19, 0)"/>
+        </addColumn>
+
+        <addColumn tableName="note">
+            <column name="owner_id" type="numeric(19, 0)"/>
+        </addColumn>
+
+    </changeSet>
+
 </databaseChangeLog>

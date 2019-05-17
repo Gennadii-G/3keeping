@@ -12,8 +12,12 @@ import java.util.List;
 @Transactional
 public class NoteServiceImpl implements NoteService {
 
-    @Autowired
     private NoteRepository noteRepository;
+
+    @Autowired
+    public NoteServiceImpl(NoteRepository noteRepository) {
+        this.noteRepository = noteRepository;
+    }
 
     public Note save(Note note) {
         return noteRepository.save(note);

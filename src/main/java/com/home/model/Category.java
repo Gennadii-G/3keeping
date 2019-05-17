@@ -1,14 +1,13 @@
 package com.home.model;
 
-import lombok.AccessLevel;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 
 
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Entity
@@ -16,8 +15,9 @@ import java.math.BigDecimal;
 public class Category {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Setter(value = AccessLevel.NONE)
+    @Column(nullable = false)
+    @SequenceGenerator(name = "seq_channel_id", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_channel_id")
     private Long id;
     private String name;
     private String code;

@@ -1,61 +1,79 @@
 package com.home.services;
 
-import com.home.Application;
+import com.home.model.Category;
 import com.home.model.Note;
+import com.home.model.Owner;
+import com.home.repositories.NoteRepository;
+import lombok.extern.slf4j.Slf4j;
+import org.assertj.core.util.Lists;
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 
-import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.when;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = Application.class)
-@Transactional
+
+@Slf4j
+@RunWith(MockitoJUnitRunner.class)
 public class NoteServiceTest {
 
-    @Autowired
-    public NoteService noteService;
+
+    @Mock
+    private NoteRepository noteRepository;
+    private NoteService noteService;
 
     @After
     public void clearDb() {
         noteService.getAll().forEach(elt -> noteService.delete(elt));
     }
 
+    private Note noteStub = buildTestNote(20L);
+
+    @Before
+    public void init() {
+        when(noteRepository.save(noteStub)).thenReturn(noteStub);
+        when(noteRepository.findAll())
+                .thenReturn(Lists.list(buildTestNote(0L), buildTestNote(1L), buildTestNote(2L)));
+        when(noteRepository.getOne(noteStub.getId())).thenReturn(noteStub);
+        noteService = new NoteServiceImpl(noteRepository);
+        log.info("success init");
+    }
+
+    private Category category;
+    private Owner owner;
+
     @Test
     public void save() {
-        Note note = getTestNote();
+        when(noteRepository.save(noteStub)).thenReturn(noteStub);
 
-        Note savedNote = noteService.save(note);
+        Note savedNote = noteService.save(noteStub);
 
-        assertEquals(note.getAmount(), savedNote.getAmount());
-        assertEquals(note.getDescription(), savedNote.getDescription());
-        assertEquals(note.getNoteDate(), savedNote.getNoteDate());
+        assertEquals(noteStub.getAmount(), savedNote.getAmount());
+        assertEquals(noteStub.getDescription(), savedNote.getDescription());
+        assertEquals(noteStub.getNoteDate(), savedNote.getNoteDate());
+        assertEquals(noteStub.getOwner(), owner);
+        assertEquals(noteStub.getCategory(), category);
     }
 
     @Test
     public void delete() {
-        for(int i = 0; i < 3; i++){
-            Note note = getTestNote();
-            note = noteService.save(note);
-        }
+
         List<Note> notes = noteService.getAll();
         assertEquals(3, noteService.getAll().size());
         noteService.delete(notes.get(0));
-        assertEquals(noteService.getAll().size(), 2);
-
     }
 
     @Test
     public void getById() {
-        Note note = getTestNote();
+        Note note = noteStub;
         note = noteService.save(note);
 
         Note foundNote = noteService.getById(note.getId());
@@ -65,20 +83,32 @@ public class NoteServiceTest {
 
     @Test
     public void getAll() {
-        for(int i = 0; i < 3; i++){
-            Note note = getTestNote();
-            note = noteService.save(note);
-        }
         List<Note> notes = noteService.getAll();
         assertEquals(3, noteService.getAll().size());
 
     }
 
-    private Note getTestNote() {
-        Note note = new Note();
-        note.setAmount(new BigDecimal(200));
-        note.setDescription("this is test note");
-        note.setNoteDate(LocalDate.of(2000, 10, 20));
+    private Note buildTestNote(Long id) {
+        Note note = Note.builder()
+                .id(id)
+                .amount(new BigDecimal(200))
+                .description("this is test note")
+                .noteDate(LocalDate.of(2000, 10, 20))
+                .build();
+
+        this.owner = Owner.builder()
+                .name("testOwner")
+                .build();
+
+        this.category = Category
+                .builder()
+                .code("CODE")
+                .name("test")
+                .priority(new BigDecimal(70))
+                .build();
+
+        note.setOwner(owner);
+        note.setCategory(category);
 
         return note;
     }

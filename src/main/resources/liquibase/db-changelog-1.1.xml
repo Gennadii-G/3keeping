@@ -19,8 +19,8 @@
             <column name="id" type="numeric(19, 0)" defaultValueSequenceNext="seq_channel_id">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="averagePriority" type="decimal(5, 2)"/>
-            <column name="lastMonthAveragePriority" type="decimal(5, 2)"/>
+            <column name="average_priority" type="decimal(3, 2)"/>
+            <column name="last_month_average_priority" type="decimal(3, 2)"/>
             <column name="name" type="varchar(255)"/>
         </createTable>
 
